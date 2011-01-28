@@ -1,0 +1,16 @@
+{
+  "name": "node-c2dm",
+  "description": "An interface to the Android Cloud to Device Messaging (C2DM) service for Node.js",
+  "version": "0.0.1",
+  "author": "Yury Proshchenko <spect.man@gmail.com>",
+  "contributors": [ 
+    { "name": "Yury Proshchenko", "email": "spect.man@gmail.com" }
+  ],
+  "keywords": ["google", "push", "push notifications", "android", "c2dm"],
+  "main": "/lib/node-c2dm.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/SpeCT/node-c2dm.git"
+  },
+  "engines": { "node": ">= 0.2.0" }
+}
