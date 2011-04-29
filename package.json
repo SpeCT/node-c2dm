@@ -7,7 +7,7 @@
     { "name": "Yury Proshchenko", "email": "spect.man@gmail.com" }
   ],
   "keywords": ["google", "push", "push notifications", "android", "c2dm"],
-  "main": "/lib/c2dm.js",
+  "main": "./lib/c2dm.js",
   "repository": {
     "type": "git",
     "url": "http://github.com/SpeCT/node-c2dm.git",
