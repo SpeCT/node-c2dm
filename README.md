@@ -96,8 +96,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ## Changelog
 
 1.0.1
-* Fixed package.json (thanks Mohd Faruq aka ruqqq)
-* Fixed 'socked hang up' error (once again thanks Mohd Faruq aka ruqqq)
+*   Fixed package.json (thanks Mohd Faruq aka ruqqq)
+*   Fixed 'socked hang up' error (once again thanks Mohd Faruq aka ruqqq)
 
 1.0.0:
-* Initial release
+*   Initial release
