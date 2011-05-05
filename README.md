@@ -95,6 +95,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Changelog
 
+1.0.2
+
+  - Fixed 'Content-length missing' error
+
 1.0.1
 
   - Fixed package.json (thanks Mohd Faruq aka ruqqq)
