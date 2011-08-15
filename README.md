@@ -91,9 +91,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [2]: http://code.google.com/apis/accounts/docs/AuthForInstalledApps.html#Request
 [3]: http://code.google.com/android/c2dm/index.html#push
 [4]: http://github.com/isaacs/npm
-[5]: http://facebook.com/spect.man
+[5]: mailto:spect.man@gmail.com
 
 ## Changelog
+
+1.0.3
+
+  - Converted internal subscription method from on(2) to once(2)
+  - Published to npm
 
 1.0.2
 
