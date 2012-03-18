@@ -95,6 +95,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Changelog
 
+1.0.4
+
+  - Handle scenario where 'close' event is emitted before 'end' event (node 0.4.x)
+
 1.0.3
 
   - Converted internal subscription method from on(2) to once(2)
