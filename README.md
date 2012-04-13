@@ -6,7 +6,7 @@ An interface for [Android Cloud to Device Messaging][1] push notification servic
 Via [npm][4]:
 
     $ npm install c2dm
-    
+
 As a submodule of your project
 
     $ git submodule add http://github.com/SpeCT/node-c2dm.git c2dm
@@ -126,6 +126,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [5]: mailto:spect.man@gmail.com
 
 ## Changelog
+
+1.1.0
+
+ - [#2](http://github.com/SpeCT/node-c2dm/issues/2) – Exponential backoff retry on quota and temporary errors (thanks Olivier Poitrey aka [rs](https://github.com/rs))
+ - Handle auth_token refresh (Update-Client-Auth header) (thanks [Sam Lown](https://github.com/samlown))
 
 1.0.4
 
