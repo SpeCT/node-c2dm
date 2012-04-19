@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>node-c2dm by SpeCT</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>node-c2dm</h1>
+        <p>An interface to the Android Cloud to Device Messaging (C2DM) service for Node.js</p>
+        <p class="view"><a href="https://github.com/SpeCT/node-c2dm">View the Project on GitHub <small>SpeCT/node-c2dm</small></a></p>
+        <ul>
+          <li><a href="https://github.com/SpeCT/node-c2dm/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/SpeCT/node-c2dm/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/SpeCT/node-c2dm">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>node-c2dm</h1>
+
+<p>An interface for <a href="http://code.google.com/android/c2dm/index.html">Android Cloud to Device Messaging</a> push notification service for Node.js</p>
+
+<h2>Installation</h2>
+
+<p>Via <a href="http://github.com/isaacs/npm">npm</a>:</p>
+
+<pre><code>$ npm install c2dm
+</code></pre>
+
+<p>As a submodule of your project</p>
+
+<pre><code>$ git submodule add <a href="http://github.com/SpeCT/node-c2dm.git">http://github.com/SpeCT/node-c2dm.git</a> c2dm
+$ git submodule update --init
+</code></pre>
+
+<h2>Usage</h2>
+
+<h3>Load in the module</h3>
+
+<pre><code>var C2DM = require('c2dm').C2DM;
+</code></pre>
+
+<h3>Create a connection</h3>
+
+<p>See <a href="http://code.google.com/apis/accounts/docs/AuthForInstalledApps.html#Request">Google Client Login documentation</a> for details.</p>
+
+<pre><code>var config = {
+    user: 'bla-blah-blah@gmail.com',
+    password: 'your-huge-very-very-strong-password',
+    source: 'com.company.app-name',
+};
+var c2dm = new C2DM(config);
+</code></pre>
+
+<h3>Login into c2dm</h3>
+
+<pre><code>c2dm.login(function(err, token){
+    // err - error, received from Google ClientLogin api
+    // token - Auth token
+});
+</code></pre>
+
+<h3>Send message to device</h3>
+
+<p>See <a href="http://code.google.com/android/c2dm/index.html#push">C2DM documentation</a> for details.</p>
+
+<pre><code>var message = {
+    registration_id: 'Device registration id',
+    collapse_key: 'Collapse key', // required
+    'data.key1': 'value1',
+    'data.key2': 'value2',
+    delay_while_idle: '1' // remove if not needed
+};
+
+c2dm.send(message, function(err, messageId){
+    if (err) {
+        console.log("Something has gone wrong!");
+    } else {
+        console.log("Sent with message ID: ", messageId);
+    }
+});
+</code></pre>
+
+<h3>Avoiding login procedure</h3>
+
+<p>You can avoid the login procedure by manually setting Google ClientLogin Auth token in the connection config.
+First of all you need to fetch the token by executing the following command. Replace <code>ROLE_EMAIL</code>, <code>ROLE_PASSWORDPASS</code> and <code>YOURCOMPANY-YOURAPP-Version</code> with your data:</p>
+
+<pre><code>$ curl -X POST <a href="https://www.google.com/accounts/ClientLogin">https://www.google.com/accounts/ClientLogin</a> -d Email=ROLE_EMAIL -d Passwd=ROLE_PASSWORDPASS -d accountType=HOSTED_OR_GOOGLE -d service=ac2dm -d source=YOURCOMPANY-YOURAPP-Version   
+</code></pre>
+
+<p>You will receive three lines. Skip <code>SID</code> and <code>LSID</code> and copy line starting with <code>Auth=</code>. Next include 'token' property into config data and fill it with this <code>Auth=...</code> line:</p>
+
+<pre><code>var config = {
+    token: 'Auth=VVVVEEERY-HUDE-TOKEN',  // N.B. include with Auth= prefix
+};
+var c2dm = new C2DM(config);
+</code></pre>
+
+<p>However, Google will occaisionally require the token to be updated before further requests can be accepted. If this happens, the <code>Update-Client-Auth</code> header will automatically be used to update the current configurations token, but obviously will not be stored on the next reload. A <code>token</code> event will be triggered if this happens so you can update a local configuration file, but its probably easier to perform a login each time the application is started:</p>
+
+<pre><code>c2dm.on('token', function(err, token) {
+  // Do something with the new token
+});
+</code></pre>
+
+<h3>Testing sending a message</h3>
+
+<p>If it looks like things aren't going your way, try sending a request manually using the following curl command and see what google sends back to you:</p>
+
+<pre><code>$ curl -H "Authorization: GoogleLogin auth=YOUR-LONG-TOKEN" -X POST <a href="https://android.apis.google.com/c2dm/send">https://android.apis.google.com/c2dm/send</a> -d "registration_id=DESTINATION-TOKEN" -d "collapse_key=key" -d "data.event=hire" -v
+</code></pre>
+
+<p>You should get back the header details along with a message id if sending has been successful. For example:</p>
+
+<pre><code>.... sending headers and SSL stuff .....
+&lt; HTTP/1.1 200 OK
+&lt; Content-Type: text/plain
+&lt; Date: Wed, 18 Jan 2012 11:18:01 GMT
+&lt; Expires: Wed, 18 Jan 2012 11:18:01 GMT
+&lt; Cache-Control: private, max-age=0
+&lt; X-Content-Type-Options: nosniff
+&lt; X-Frame-Options: SAMEORIGIN
+&lt; X-XSS-Protection: 1; mode=block
+&lt; Server: GSE
+&lt; Transfer-Encoding: chunked
+&lt;
+id=0:1326885481081626%900b347100019e5f
+.... more SSL stuff ....
+</code></pre>
+
+<h3>Keep-alive connection</h3>
+
+<p>This module supports Connection: keep-alive header too keep connection to c2dm gate established. You could use it by simply including property in config:</p>
+
+<pre><code>var config = {
+    ...
+    keepAlive: true,  // it is false by default
+};
+</code></pre>
+
+<h2>Credits</h2>
+
+<p>Written and maintained by <a href="mailto:spect.man@gmail.com">Yury Proshchenko</a>.</p>
+
+<h2>License</h2>
+
+<p>The MIT License</p>
+
+<p>Copyright (c) 2011 Yury Proshchenko (spect.man@gmail.com)</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+<h2>Changelog</h2>
+
+<p>1.1.0</p>
+
+<ul>
+<li>
+<a href="http://github.com/SpeCT/node-c2dm/issues/2">#2</a> – Exponential backoff retry on quota and temporary errors (thanks Olivier Poitrey aka <a href="https://github.com/rs">rs</a>)</li>
+<li>Handle auth_token refresh (Update-Client-Auth header) (thanks <a href="https://github.com/samlown">Sam Lown</a>)</li>
+</ul><p>1.0.4</p>
+
+<ul>
+<li>Handle scenario where 'close' event is emitted before 'end' event (node 0.4.x)</li>
+</ul><p>1.0.3</p>
+
+<ul>
+<li>Converted internal subscription method from on(2) to once(2)</li>
+<li>Published to npm</li>
+</ul><p>1.0.2</p>
+
+<ul>
+<li>Fixed 'Content-length missing' error</li>
+</ul><p>1.0.1</p>
+
+<ul>
+<li>Fixed package.json (thanks Mohd Faruq aka ruqqq)</li>
+<li>Fixed 'socked hang up' error (once again thanks Mohd Faruq aka ruqqq)</li>
+</ul><p>1.0.0:</p>
+
+<ul>
+<li>Initial release</li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/SpeCT">SpeCT</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-31018807-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
