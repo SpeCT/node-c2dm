@@ -1,4 +1,5 @@
 .project
+/node_modules
 
 # vi swap files
 *.swp
