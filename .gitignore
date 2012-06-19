@@ -1,0 +1,9 @@
+.project
+
+# vi swap files
+*.swp
+
+# Komodo
+*.komodoproject
+.komodotools
+
