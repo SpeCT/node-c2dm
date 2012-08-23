@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/SpeCT/node-c2dm.png)](http://travis-ci.org/SpeCT/node-c2dm)
 # node-c2dm
 An interface for [Android Cloud to Device Messaging][1] push notification service for Node.js
 
