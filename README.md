@@ -33,7 +33,7 @@ See [Google Client Login documentation][2] for details.
         // err - error, received from Google ClientLogin api
         // token - Auth token
     });
-    
+
 ### Send message to device
 See [C2DM documentation][3] for details.
 
@@ -44,7 +44,7 @@ See [C2DM documentation][3] for details.
         'data.key2': 'value2',
         delay_while_idle: '1' // remove if not needed
     };
-    
+
     c2dm.send(message, function(err, messageId){
         if (err) {
             console.log("Something has gone wrong!");
@@ -57,7 +57,7 @@ See [C2DM documentation][3] for details.
 You can avoid the login procedure by manually setting Google ClientLogin Auth token in the connection config.
 First of all you need to fetch the token by executing the following command. Replace `ROLE_EMAIL`, `ROLE_PASSWORDPASS` and `YOURCOMPANY-YOURAPP-Version` with your data:
 
-    $ curl -X POST https://www.google.com/accounts/ClientLogin -d Email=ROLE_EMAIL -d Passwd=ROLE_PASSWORDPASS -d accountType=HOSTED_OR_GOOGLE -d service=ac2dm -d source=YOURCOMPANY-YOURAPP-Version	
+    $ curl -X POST https://www.google.com/accounts/ClientLogin -d Email=ROLE_EMAIL -d Passwd=ROLE_PASSWORDPASS -d accountType=HOSTED_OR_GOOGLE -d service=ac2dm -d source=YOURCOMPANY-YOURAPP-Version
 
 You will receive three lines. Skip `SID` and `LSID` and copy line starting with `Auth=`. Next include 'token' property into config data and fill it with this `Auth=...` line:
 
@@ -104,8 +104,14 @@ This module supports Connection: keep-alive header too keep connection to c2dm g
 
 
 ## Credits
-
 Written and maintained by [Yury Proshchenko][5].
+
+## Contributors
+Mohd Faruq aka [ruqqq][6]
+[Sam Lown][7]
+Olivier Poitrey aka [rs][8]
+[Charles Daniel][9]
+
 
 ## License
 
@@ -119,18 +125,17 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[1]: http://code.google.com/android/c2dm/index.html
-[2]: http://code.google.com/apis/accounts/docs/AuthForInstalledApps.html#Request
-[3]: http://code.google.com/android/c2dm/index.html#push
-[4]: http://github.com/isaacs/npm
-[5]: mailto:spect.man@gmail.com
 
 ## Changelog
 
+1.2.0
+
+ - [#16](http://github.com/SpeCT/node-c2dm/issues/16), [#19](http://github.com/SpeCT/node-c2dm/issues/19), [#2](http://github.com/SpeCT/node-c2dm/issues/22) – Missed `Auth=` prefix was restored by [Charles Daniel][9]
+
 1.1.0
 
- - [#2](http://github.com/SpeCT/node-c2dm/issues/2) – Exponential backoff retry on quota and temporary errors (thanks Olivier Poitrey aka [rs](https://github.com/rs))
- - Handle auth_token refresh (Update-Client-Auth header) (thanks [Sam Lown](https://github.com/samlown))
+ - [#2](http://github.com/SpeCT/node-c2dm/issues/2) – Exponential backoff retry on quota and temporary errors (thanks Olivier Poitrey aka [rs][8])
+ - Handle auth_token refresh (Update-Client-Auth header) (thanks [Sam Lown][7])
 
 1.0.4
 
@@ -147,9 +152,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 1.0.1
 
-  - Fixed package.json (thanks Mohd Faruq aka ruqqq)
-  - Fixed 'socked hang up' error (once again thanks Mohd Faruq aka ruqqq)
+  - Fixed package.json (thanks Mohd Faruq aka [ruqqq][6])
+  - Fixed 'socked hang up' error (once again thanks Mohd Faruq aka [ruqqq][6])
 
 1.0.0:
 
   - Initial release
+
+
+[1]: http://code.google.com/android/c2dm/index.html
+[2]: http://code.google.com/apis/accounts/docs/AuthForInstalledApps.html#Request
+[3]: http://code.google.com/android/c2dm/index.html#push
+[4]: http://github.com/isaacs/npm
+[5]: mailto:spect.man@gmail.com
+[6]: https://github.com/ruqqq
+[7]: https://github.com/samlown
+[8]: https://github.com/rs
+[9]: https://github.com/charlesdaniel
