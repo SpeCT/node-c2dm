@@ -107,10 +107,11 @@ This module supports Connection: keep-alive header too keep connection to c2dm g
 Written and maintained by [Yury Proshchenko][5].
 
 ## Contributors
-Mohd Faruq aka [ruqqq][6]
-[Sam Lown][7]
-Olivier Poitrey aka [rs][8]
-[Charles Daniel][9]
+
+* Mohd Faruq aka [ruqqq][6]
+* [Sam Lown][7]
+* Olivier Poitrey aka [rs][8]
+* [Charles Daniel][9]
 
 
 ## License
