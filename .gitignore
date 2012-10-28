@@ -1,0 +1,10 @@
+.project
+/node_modules
+
+# vi swap files
+*.swp
+
+# Komodo
+*.komodoproject
+.komodotools
+
