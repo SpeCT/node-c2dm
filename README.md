@@ -170,3 +170,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [7]: https://github.com/samlown
 [8]: https://github.com/rs
 [9]: https://github.com/charlesdaniel
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/SpeCT/node-c2dm/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
